@@ -82,11 +82,5 @@ namespace GameOfLife
             if (NextAlive == false)
                 Alive = false;
         }
-
-
-
-
-
- 
     }
 }

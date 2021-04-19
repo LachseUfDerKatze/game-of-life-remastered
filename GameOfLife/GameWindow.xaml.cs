@@ -138,6 +138,7 @@ namespace GameOfLife
         {
             LifeGrid.RowDefinitions.Clear();
             LifeGrid.ColumnDefinitions.Clear();
+            LifeGrid.Children.Clear();
             CreateGrid(Int32.Parse(tbxHeight.Text), Int32.Parse(tbxWidth.Text));
         }
     }
