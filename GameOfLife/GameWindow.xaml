@@ -1,0 +1,26 @@
+﻿<Window x:Class="GameOfLife.GameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Conway's Game of Life"  Loaded="Window_Loaded">
+    <!-- <StackPanel Name="StackObject"> -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+    <ToolBar Height="25">
+            <Button Name="NextStep" Content="Next" Width="30" Margin="10,0" Click="NextStep_Click" ></Button>
+            <ToggleButton Name="Autostep" Content="Start/stop" Width="80" Margin="10,0" Checked="Autostep_Checked"></ToggleButton>
+            <Button Name="Reset" Content="Reset" Width="40" Margin="10,0" Click="Reset_Click"></Button>
+            <TextBlock Margin="20,0,0,0">Delay(ms)</TextBlock>
+            <TextBox Name="Delay" Text="{Binding ElementName=DelaySlider, Path=Value}" Width="40"></TextBox>
+            <Slider x:Name="DelaySlider" Height="24" Width="200" Minimum="10" Maximum="1000" SmallChange="1" IsSnapToTickEnabled="True" Value="200"></Slider>
+            <Button Name="SavePos" Content="Save Position" Width="100" Click="SavePos_Click"></Button>
+            <Button Name="StartingPos" Content="StartPosition" Width="100" VerticalAlignment="Bottom" Click="StartingPos_Click"></Button>
+         </ToolBar>
+        <Grid Name="LifeGrid" ShowGridLines="True" Grid.Row="1">
+        
+    </Grid>
+    </Grid>
+    <!-- </StackPanel>-->
+</Window>

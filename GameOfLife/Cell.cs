@@ -1,72 +1,92 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Threading;
+using System.ComponentModel;
 
 namespace GameOfLife
 {
-    public class Cell : System.Object
+    public class Cell : Button
     {
-        public int x { get; }
-        public int y { get; }
-
-        public Cell(int x, int y)
+        public int Row { get; set; }
+        public int Column { get; set; }
+        private bool AliveValue;
+        public bool Alive 
         {
-            this.x = x;
-            this.y = y;
-        }
-
-        // Return a list list of all neighbors of this cell
-        public List<Cell> Neighbors()
-        {
-            var neighbors = new List<Cell>();
-            for (int x = this.x - 1; x < this.x + 2; x++)
+            get
             {
-                for (int y = this.y - 1; y < this.y + 2; y++)
-                {
-                    if (x != this.x || y != this.y)
-                    {
-                        neighbors.Add(new Cell(x, y));
-                    }
-                }
+                return AliveValue;
             }
-            return neighbors;
-        }
-
-        public override int GetHashCode()
-        {
-            return this.x.GetHashCode() ^ this.y.GetHashCode();
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj == null)
+            set
             {
-                return false;
+                AliveValue = value;
+                
             }
-
-            Cell other = obj as Cell;
-            if ((System.Object)other == null)
-            {
-                return false;
-            }
-
-            // Return true if the fields match:
-            return (x == other.x) && (y == other.y);
         }
+        public bool NextAlive { get; set; }
 
-        public bool Equals(Cell other)
+        public Cell(bool currentState,int row, int column)
         {
-            if (other == null)
-            {
-                return false;
-            }
-
-            // Return true if the fields match:
-            return (x == other.x) && (y == other.y);
+            Row = row;
+            Column = column;
+            Alive = currentState;
         }
 
-        public override string ToString()
+        protected override void OnClick()
         {
-            return "Cell(" + x + "," + y + ")";
+            base.OnClick();
+            if (NextAlive == true)
+            {
+                NextAlive = false;
+                this.Opacity = 0;
+            }
+            else
+            {
+                NextAlive = true;
+                this.Opacity = 1;
+            }                
+            
+            if (Alive == true)
+            {
+                Alive = false;
+                this.Opacity = 0;
+            }
+            else
+            {
+                Alive = true;
+                this.Opacity = 1;
+            }                                  
         }
+
+        public void NextState(int neighbours)
+        {
+            int count = neighbours;
+            if (Alive == true && count < 2 || count > 3)
+            {
+                NextAlive = false;
+            }
+            else if (Alive==false && count == 3)
+                NextAlive = true;
+        }
+
+        public void ChangeState()
+        {
+            
+            if (NextAlive == true)
+            {
+                Alive = true;
+            }
+            if (NextAlive == false)
+                Alive = false;
+        }
+
+
+
+
+
+ 
     }
-
 }
