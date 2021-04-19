@@ -33,26 +33,28 @@ namespace GameOfLife
            LifeGrid.HorizontalAlignment = HorizontalAlignment.Stretch;
            LifeGrid.VerticalAlignment = VerticalAlignment.Stretch;
 
-            for (int i=0;i < 50; i++)
+            CreateGrid(16, 9);
+        }
+
+        public void CreateGrid(int height, int width)
+        {
+            for (int i = 0; i < width; i++)
             {
-                ColumnDefinition kolom = new ColumnDefinition();                
-                RowDefinition rij = new RowDefinition();                              
-                LifeGrid.ColumnDefinitions.Add(kolom);
-                LifeGrid.RowDefinitions.Add(rij);
+                ColumnDefinition col = new ColumnDefinition();
+                LifeGrid.ColumnDefinitions.Add(col);
+            }
+            for (int i = 0; i < height; i++)
+            {
+                RowDefinition row = new RowDefinition();
+                LifeGrid.RowDefinitions.Add(row);
             }
 
             Cell cell;
-           // Rectangle background;
+            // Rectangle background;
             for (int row = 0; row < LifeGrid.RowDefinitions.Count; row++)
             {
                 for (int column = 0; column < LifeGrid.ColumnDefinitions.Count; column++)
                 {
-                    //background= new Rectangle();
-
-                    //Grid.SetRow(background,row);
-                    //Grid.SetColumn(background,column);
-                    //LifeGrid.Children.Add(background);
-
                     cell = new Cell(false, row, column);
                     cell.Opacity = 0;
                     cell.Width = LifeGrid.Width / LifeGrid.ColumnDefinitions.Count;
@@ -71,28 +73,6 @@ namespace GameOfLife
 
         public void Next()
         {
-            /* Compleet inefficient 
-           foreach (Cell neighbour in LifeGrid.Children)
-                {
-                    int x = neighbour.Row;
-                    int y = neighbour.Column;
-                    if ((x == a - 1 && (y == b - 1 || y == b || y == b + 1))
-                        || (x == a && (y == b - 1 || y == b + 1))
-                        || (x == a + 1 && (y == b - 1 || y == b || y == b + 1)))
-                    {
-                        if (neighbour.Alive == true)
-                            count++;
-                    }
-                }
-             * Compleet inefficient 2
-             * foreach (Cell neighbour in LifeGrid.Children.Cast<UIElement>().Where(neighbour => Grid.GetRow(neighbour) == y
-                            && Grid.GetColumn(neighbour) == x))
-                        {
-
-
-                            if (cell.Column != x || cell.Row != y) 
-         */
-
             foreach (Cell cell in LifeGrid.Children)
             {              
                 int count = 0;
@@ -128,12 +108,6 @@ namespace GameOfLife
                     cell.Opacity = 0;
             }
         }
-     
-        private void NextStep_Click(object sender, RoutedEventArgs e)
-        {
-            Next();
-            Update();
-        }
 
         private async void Autostep_Checked(object sender, RoutedEventArgs e)
         {
@@ -146,10 +120,10 @@ namespace GameOfLife
             while (runbutton.IsChecked == true)
             {
 
-                int wacht = (int)DelaySlider.Value;
+                int delay = 200;
                 Next();
                 Update();
-                await Task.Delay(wacht);
+                await Task.Delay(delay);
             }
         }
 
@@ -160,32 +134,11 @@ namespace GameOfLife
             Update();
         }
 
-        private void StartingPos_Click(object sender, RoutedEventArgs e)
+        private void btnBuildGrid_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Cell reset in LifeGrid.Children)
-            {
-                reset.NextAlive = false;
-            }
-            foreach (Cell savedCell in startpos)
-            {
-                foreach (Cell cell in LifeGrid.Children)
-                {
-                    if (cell.Row == savedCell.Row && cell.Column == savedCell.Column)
-                        cell.NextAlive = true;
-                   
-                }
-            }
-            Update();
-        }
-
-        private void SavePos_Click(object sender, RoutedEventArgs e)
-        {
-            startpos.Clear();
-            foreach (Cell cell in LifeGrid.Children)
-            {
-                if (cell.Alive == true)
-                startpos.Add(cell);
-            }
+            LifeGrid.RowDefinitions.Clear();
+            LifeGrid.ColumnDefinitions.Clear();
+            CreateGrid(Int32.Parse(tbxHeight.Text), Int32.Parse(tbxWidth.Text));
         }
     }
 }
