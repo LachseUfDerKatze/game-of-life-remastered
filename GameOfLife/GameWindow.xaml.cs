@@ -136,10 +136,24 @@ namespace GameOfLife
 
         private void btnBuildGrid_Click(object sender, RoutedEventArgs e)
         {
-            LifeGrid.RowDefinitions.Clear();
-            LifeGrid.ColumnDefinitions.Clear();
-            LifeGrid.Children.Clear();
-            CreateGrid(Int32.Parse(tbxHeight.Text), Int32.Parse(tbxWidth.Text));
+            string height = tbxHeight.Text;
+            string width = tbxWidth.Text;
+
+            if (Int32.TryParse(height, out int resultHeight))
+            {
+                if (Int32.TryParse(width, out int resultWidth))
+                {
+                    LifeGrid.RowDefinitions.Clear();
+                    LifeGrid.ColumnDefinitions.Clear();
+                    LifeGrid.Children.Clear();
+                    CreateGrid(resultHeight, resultWidth);
+                    tbxWidth.Background = System.Windows.Media.Brushes.White;
+                    tbxHeight.Background = System.Windows.Media.Brushes.White;
+                    return;
+                }
+            }
+            tbxHeight.Background = System.Windows.Media.Brushes.Red;
+            tbxWidth.Background = System.Windows.Media.Brushes.Red;
         }
     }
 }
