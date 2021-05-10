@@ -155,5 +155,21 @@ namespace GameOfLife
             tbxHeight.Background = System.Windows.Media.Brushes.Red;
             tbxWidth.Background = System.Windows.Media.Brushes.Red;
         }
+
+        private void btnFillGridRandom_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (Cell cell in Lifegrid.Children) {
+                Random random = new Random();
+                int number = random.Next(0, 4);
+
+                cell.NextAlive = false;
+
+                if (number == 4) {
+                    cell.NextAlive = true;
+                }
+
+                cell.ChangeState();
+            }
+        }
     }
 }
