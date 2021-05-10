@@ -22,8 +22,7 @@ namespace GameOfLife
             }
             set
             {
-                AliveValue = value;
-                
+                AliveValue = value;   
             }
         }
         public bool NextAlive { get; set; }
