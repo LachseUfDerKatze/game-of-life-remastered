@@ -160,15 +160,16 @@ namespace GameOfLife
         {
             foreach (Cell cell in LifeGrid.Children) {
                 Random random = new Random();
-                int number = random.Next(0, 11);
+                int number = random.Next(0, 5);
 
-                cell.NextAlive = false;
+                cell.Alive = false;
+                
 
-                if (number == 1) {
-                    cell.NextAlive = true;
+                if (number == 4) {
+                    cell.Alive = true;
                 }
 
-                Update();
+                cell.ChangeOpacity();
             }
         }
     }
