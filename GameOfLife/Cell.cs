@@ -63,6 +63,7 @@ namespace GameOfLife
         public void NextState(int neighbours)
         {
             int count = neighbours;
+
             if (Alive == true && count < 2 || count > 3)
             {
                 NextAlive = false;
@@ -71,15 +72,13 @@ namespace GameOfLife
                 NextAlive = true;
         }
 
-        public void ChangeState()
+        public void ChangeOpacity()
         {
-            
-            if (NextAlive == true)
-            {
-                Alive = true;
+            this.Opacity = 0;
+
+            if (this.Alive) {
+                this.Opacity = 1;
             }
-            if (NextAlive == false)
-                Alive = false;
         }
     }
 }

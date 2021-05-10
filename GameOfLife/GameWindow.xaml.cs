@@ -158,17 +158,18 @@ namespace GameOfLife
 
         private void btnFillGridRandom_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Cell cell in Lifegrid.Children) {
+            foreach (Cell cell in LifeGrid.Children) {
                 Random random = new Random();
-                int number = random.Next(0, 4);
+                int number = random.Next(0, 5);
 
-                cell.NextAlive = false;
+                cell.Alive = false;
+                
 
                 if (number == 4) {
-                    cell.NextAlive = true;
+                    cell.Alive = true;
                 }
 
-                cell.ChangeState();
+                cell.ChangeOpacity();
             }
         }
     }
