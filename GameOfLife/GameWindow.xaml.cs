@@ -97,15 +97,24 @@ namespace GameOfLife
             
         private void Update()
         {
+            int activeCount = 0;
+
             foreach (Cell cell in LifeGrid.Children)
             {
                 cell.Alive = cell.NextAlive;
-                if (cell.Alive == true)
-                    cell.Opacity = 1;
 
-                   
-                else
+                if (cell.Alive == true)
+                {
+                    cell.Opacity = 1;
+                    activeCount++;
+                }
+
+                else 
+                {
                     cell.Opacity = 0;
+                }
+
+                refreshCounter(activeCount);
             }
         }
 
@@ -158,19 +167,28 @@ namespace GameOfLife
 
         private void btnFillGridRandom_Click(object sender, RoutedEventArgs e)
         {
+            Random random = new Random();
+            int count = 0;
+
             foreach (Cell cell in LifeGrid.Children) {
-                Random random = new Random();
-                int number = random.Next(0, 5);
+                int number = random.Next(0, 4);
 
                 cell.Alive = false;
-                
-
-                if (number == 4) {
+            
+                if (number == 3)
+                {
+                    count++;
                     cell.Alive = true;
                 }
 
                 cell.ChangeOpacity();
+                refreshCounter(count);
             }
+        }
+
+        private void refreshCounter(int count)
+        {
+            lblCounterActive.Content = count;
         }
     }
 }
